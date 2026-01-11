@@ -507,10 +507,12 @@ class StudyMode {
       this.stopAudio();
       this.updateCard();
       this.updateProgress();
-      console.log('⬅️ Card anterior:', this.currentCardIndex + 1);
+      console.log('⬅️ Card anterior:', this.currentCardIndex + 1, 'de', this.allCards.length);
+    } else {
+      console.log('⚠️ Já está no primeiro card');
     }
   }
-
+  
   toggleAudio() {
     if (this.isPlaying) {
       this.stopAudio();
