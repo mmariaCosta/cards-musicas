@@ -399,7 +399,7 @@ class StudyMode {
         playerContainer.style.display = 'block';
         playerContainer.innerHTML = `
           <iframe 
-            style="width: 100%; height: 200px; border-radius: 12px; border: none;" 
+            style="width: 90%; height: 350px; border-radius: 15px; border: none;" 
             src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen>
@@ -531,7 +531,7 @@ class StudyMode {
     if ('speechSynthesis' in window) {
       this.utterance = new SpeechSynthesisUtterance(textToSpeak);
       this.utterance.lang = 'en-US';
-      this.utterance.rate = 0.60;
+      this.utterance.rate = 0.55;
       
       this.utterance.onend = () => {
         this.isPlaying = false;
