@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#9f7aea">
+
+  
+  <!-- PWA Meta Tags -->
+  <meta name="description" content="Aprenda idiomas com suas músicas favoritas">
+  <meta name="theme-color" content="#9f7aea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Flashcards">
+  
+  <!-- Apple Touch Icons -->
+  <link rel="apple-touch-icon" href="icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="96x96" href="icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="128x128" href="icon-128x128.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="icon-192x192.png">
+  <link rel="apple-touch-icon" sizes="384x384" href="icon-384x384.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icon-512x512.png">
+  
+  <!-- Manifest -->
+  <link rel="manifest" href="manifest.json">
+  
+  <title>Flashcards Musicais - Estudo de Idiomas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>🎵 FlashCards</h1>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <button class="nav-btn active" data-view="home">
+        <span class="icon">❤️</span>
+        <span>Início</span>
+      </button>
+      
+      <button class="nav-btn" data-view="historico">
+        <span class="icon">🕒</span>
+        <span>Histórico</span>
+      </button>
+      
+      <button class="nav-btn" data-view="pastas">
+        <span class="icon">📁</span>
+        <span>Pastas</span>
+      </button>
+    </nav>
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="main-content">
+    
+    <!-- VIEW: HOME -->
+    <section id="home" class="view active">
+      <div class="page-header">
+        <h2>Meus Favoritos</h2>
+        <button class="btn-criar" id="btnCriar">
+          <span class="icon">➕</span>
+          <span>Criar Flashcard</span>
+        </button>
+      </div>
+      
+      <div id="favoritosList" class="cards-grid"></div>
+      
+      <div id="emptyFavoritos" class="empty-state">
+        <div class="empty-icon">❤️</div>
+        <p>Nenhum flashcard favoritado ainda</p>
+        <small>Marque seus flashcards favoritos com ⭐</small>
+      </div>
+    </section>
+
+    <!-- VIEW: HISTÓRICO -->
+    <section id="historico" class="view">
+      <div class="page-header">
+        <div>
+          <h2>Histórico</h2>
+          <p class="subtitle" id="contadorTotal">0 flashcards criados</p>
+        </div>
+      </div>
+      
+      <div id="historicoList" class="cards-grid"></div>
+      
+      <div id="emptyHistorico" class="empty-state">
+        <div class="empty-icon">🕒</div>
+        <p>Nenhum flashcard criado ainda</p>
+        <button class="btn-link" id="btnCriarEmpty">Criar seu primeiro flashcard</button>
+      </div>
+    </section>
+
+    <!-- VIEW: PASTAS -->
+    <section id="pastas" class="view">
+      <div class="page-header">
+        <h2>Pastas</h2>
+      </div>
+      
+      <div id="pastasList" class="pastas-grid"></div>
+      
+      <div id="emptyPastas" class="empty-state">
+        <div class="empty-icon">📁</div>
+        <p>Nenhuma pasta criada ainda</p>
+      </div>
+    </section>
+
+    <!-- VIEW: CONTEÚDO DA PASTA -->
+    <section id="pastaConteudo" class="view">
+      <button class="btn-voltar" id="btnVoltarPastas">← Voltar para Pastas</button>
+      
+      <div class="page-header">
+        <h2 id="pastaNome"></h2>
+      </div>
+      
+      <div id="pastaConteudoList" class="cards-grid"></div>
+    </section>
+
+    <!-- VIEW: CRIAR FLASHCARD -->
+    <section id="criar" class="view">
+      <div class="page-header">
+        <h2>Criar Novo Flashcard</h2>
+      </div>
+      
+      <div class="form-container">
+        <div class="form-group">
+          <label>Título da Música</label>
+          <input type="text" id="inputTitulo" placeholder="Ex: Yesterday">
+        </div>
+        
+        <div class="form-group">
+          <label>Artista(s)</label>
+          <input type="text" id="inputArtista" placeholder="Ex: The Beatles">
+        </div>
+        
+        <div class="form-group">
+          <label>Link do YouTube ou Spotify (opcional)</label>
+          <input type="text" id="inputSpotify" placeholder="Cole o link da música aqui (YouTube ou Spotify)">
+          <small style="color: #6b21a8; margin-top: 0.5rem; display: block;">
+            🎵 Cole o link do YouTube ou Spotify para ouvir durante o estudo
+          </small>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Pasta</label>
+            <select id="selectPasta" class="pasta-select">
+              <option value="">Sem pasta</option>
+              <option value="__nova__">➕ Criar nova pasta</option>
+            </select>
+          </div>
+          
+          <div class="form-group" id="novaPastaGroup" style="display: none;">
+            <label>Nome da Nova Pasta</label>
+            <input type="text" id="inputNovaPasta" placeholder="Ex: Rock Clássico">
+          </div>
+        </div>
+        
+        <div class="form-group" id="corPastaGroup" style="display: none;">
+          <label>Cor da Pasta</label>
+          <input type="color" id="inputCor" value="#b197fc">
+        </div>
+        
+        <div class="form-group">
+          <label>Letra da Música (alterne entre inglês e português)</label>
+          <textarea id="inputLetra" rows="12" placeholder="Yesterday, all my troubles seemed so far away&#10;Ontem, todos os meus problemas pareciam tão distantes&#10;Now it looks as though they're here to stay&#10;Agora parece que eles vieram para ficar"></textarea>
+          <small style="color: #6b21a8; margin-top: 0.5rem; display: block;">
+            📝 Digite alternando: Linha 1 em inglês, Linha 2 em português, Linha 3 em inglês, e assim por diante
+          </small>
+        </div>
+        
+        <div class="form-actions">
+          <button class="btn-salvar" id="btnSalvar">
+            <span class="icon">💾</span>
+            <span>Salvar Flashcard</span>
+          </button>
+          
+          <button class="btn-cancelar" id="btnCancelar">Cancelar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW: ESTUDAR -->
+    <section id="estudar" class="view">
+      <div class="study-header">
+        <div>
+          <h2 id="studyTitulo"></h2>
+          <p id="studyArtista"></p>
+        </div>
+        <button class="btn-fechar" id="btnFecharEstudo">✕</button>
+      </div>
+      
+      <!-- PLAYER DO YOUTUBE/SPOTIFY -->
+      <div id="spotifyPlayerContainer" style="margin-bottom: 2rem; display: none;"></div>
+      
+      <div class="progress-container">
+        <div class="progress-info">
+          <span id="progressText">Segmento 1 de 1</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+      
+      <div class="flashcard-container" id="flashcardContainer">
+        <div class="flashcard-content">
+          <p id="flashcardText"></p>
+          <div class="flip-hint">
+            <span class="icon">🔄</span>
+            <span>Clique para virar</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="study-controls">
+        <div class="controls-wrapper">
+          <button class="ctrl-btn" id="btnAnterior" disabled>
+            <span class="icon">⏮️</span>
+          </button>
+          
+          <button class="ctrl-btn-main" id="btnAudio">
+            <span class="icon" id="audioIcon">🔊</span>
+          </button>
+          
+          <button class="ctrl-btn" id="btnProximo">
+            <span class="icon">⏭️</span>
+          </button>
+        </div>
+        
+        <div class="controls-info">
+          <p>Use os controles para navegar entre os segmentos</p>
+          <small>O áudio reproduz o segmento em inglês em velocidade reduzida (0.60x)</small>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+  
+  <!-- PWA Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(registration => {
+            console.log('✅ Service Worker registrado com sucesso:', registration.scope);
+          })
+          .catch(error => {
+            console.log('❌ Falha ao registrar Service Worker:', error);
+          });
+      });
+    }
+
+    // Instalação do PWA
+    let deferredPrompt;
+    const installButton = document.createElement('button');
+    installButton.textContent = '📱 Instalar App';
+    installButton.className = 'btn-install';
+    installButton.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+      color: white;
+      border: none;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+      display: none;
+      z-index: 1000;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    `;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installButton.style.display = 'block';
+      document.body.appendChild(installButton);
+    });
+
+    installButton.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response: ${outcome}`);
+        deferredPrompt = null;
+        installButton.style.display = 'none';
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('✅ PWA instalado com sucesso!');
+      installButton.style.display = 'none';
+    });
+    
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js');
+    }
+</script>
+
+</body>
+</html>
